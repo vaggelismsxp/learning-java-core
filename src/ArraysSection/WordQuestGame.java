@@ -10,20 +10,22 @@ import java.util.Scanner;
 
 public class WordQuestGame {
     static char EMPTY_PLACE_HOLDER = '-';
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
+        //init
         Scanner scanner = new Scanner(System.in);
+        String fileName = "data/sample-words.txt";
+
+
         System.out.print("How many lives you want? (0,20) ");
-        
         int attempts = scanner.nextInt();
         if (attempts >20){attempts = 10;}
-         String secretWord="";
-        try {
-            secretWord= getRandomWord("data/sample-words.txt");
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
 
+        //Read word from file
+        
+        
+        String secretWord= getRandomWord(fileName);
+        
         //GameEnum[] table = GameEnum.values();
         //String secretWord = table[random.nextInt(table.length)].toString();
         
@@ -37,6 +39,7 @@ public class WordQuestGame {
         System.out.println("Welcome to Word Quest!");
 
         boolean hasMissingLetters = true;
+
         while(attempts > 0 && hasMissingLetters){
             boolean isGuessCorrect=false;
 
@@ -52,10 +55,6 @@ public class WordQuestGame {
                     isGuessCorrect=true;
                 }
             }
-
-
-
-            
 
             if (isGuessCorrect){
                 System.out.println("Correct. Attempts remaining: "+ attempts);

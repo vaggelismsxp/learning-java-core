@@ -1,47 +1,68 @@
 package OOPSection.battlearena;
 
-
+import static OOPSection.battlearena.Enemy.getNumberOfEnemies;
 public class Main {
 
     public static void main(String[] args) {
         
-        // Ogre[] ogres = new Ogre[5];
-        // for (int i=0;i<ogres.length;i++){
-        //     ogres[i] = new Ogre(i, i);
-        // }
-        // Zombie[] zombies = new Zombie[10];
-        // for (int i=0;i<zombies.length;i++){
-        //     zombies[i] = new Zombie(i, i);
-        // }
-        // System.out.println("ee");
-        // System.out.println(zombies[0].getNumberOfEnemies());
-          
+        Zombie zombie = new Zombie(30,9);
+        Hero hero = new Hero(30,5);
+        Weapon weapon = new Weapon("Sword", 5);
 
-        // Enemy[] enemy = new Enemy[11];
-        // for (int i=0;i<enemy.length;i++){
-        //     if (i%2==0){
-        //         enemy[i] = new Zombie(i, i);
-        //     }else{
-        //         enemy[i] = new Ogre(i, i);
-        //     }
-        // }
+        hero.setWeapon(weapon);
+        hero.setWeaponEquipped(true);
+        hero.equipWeapon();
 
-        // for (Enemy temp : enemy){
-        //     temp.talk();
-        // }
-        // enemy[0].talk();
+        heroBattle(hero,zombie);
 
-        Zombie zombie= new Zombie(10,1);
-        Ogre ogre = new Ogre(20,3);
+        System.out.println(hero.getAttackDamage());
+        
+    }
 
-        battle(zombie);
-        battle(ogre);
+    private static void heroBattle(Hero hero, Enemy enemy) {
+        while (hero.getHealthPointsRemaining() >0 && enemy.getHealthPointsRemaining()>0){
+            enemy.specialAttack();
+
+            enemy.attack();
+            hero.setHealthPointsRemaining(hero.getHealthPointsRemaining() - enemy.getAttackDamage());
+
+            enemy.setHealthPointsRemaining(enemy.getHealthPointsRemaining() - hero.getAttackDamage());
+
+
+        }
+        if (hero.getHealthPointsRemaining()>0){
+            System.out.println("Hero wins");
+        }else if(enemy.getHealthPointsRemaining()>0){
+            System.out.println("Monster Wins");
+        }else{
+            System.out.println("Fight ended as a draw");
+        }
 
     }
 
-    public static void battle(Enemy e){
-        e.talk();
-        e.attack();
+    public static void battle(Enemy e1, Enemy e2){
+
+        while (e1.getHealthPointsRemaining()>0 && e2.getHealthPointsRemaining()>0){
+            e1.talk();
+            e2.talk();
+
+            e1.specialAttack();
+            e2.specialAttack();
+
+            e2.attack();
+            e1.setHealthPointsRemaining(e1.getHealthPointsRemaining() - e2.getAttackDamage());
+            
+            e1.attack();
+            e2.setHealthPointsRemaining(e2.getHealthPointsRemaining() - e1.getAttackDamage());
+        }
+        if (e1.getHealthPointsRemaining()>0){
+            System.out.println("E1 enemy wins");
+        }else if (e2.getHealthPointsRemaining()>0){
+            System.out.println("E2 enemy wins");
+        }else{
+            System.out.println("It ends with Draw");
+        }
     }
+    
     
 }

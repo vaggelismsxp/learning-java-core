@@ -1,6 +1,6 @@
 package OOPSection.battlearena;
 
-public class Ogre extends Enemy {
+public class Ogre extends Enemy implements IOgre {
 
     public Ogre( int healthPoints,int attackDamage){
         super(healthPoints,attackDamage);
@@ -16,4 +16,17 @@ public class Ogre extends Enemy {
     public void attack(){
         System.out.println("Ogre attacks for " + this.getAttackDamage() + " damage");
     }
+    @Override
+    public void stareDown(){
+        System.out.println("Ogre ready to eat your ars");
+    }
+    @Override
+    public void specialAttack(){
+        boolean didSpecialAttackWork = Math.random() < .20;
+        if (didSpecialAttackWork){
+            this.setAttackDamage(getAttackDamage()+4);
+            System.out.println("Ogre gets +4 attack damage buff");
+        }
+    }
+
 }

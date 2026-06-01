@@ -1,8 +1,8 @@
-package JavaCollectionsFramework;
+package JavaCollectionsFramework.List;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 
 public class LinkedListDemo {
 
@@ -12,7 +12,7 @@ public class LinkedListDemo {
         todoItems.add(870);
         todoItems.add(32);
         todoItems.add(45);
-
+        Collections.sort(todoItems);
         for (int temp : todoItems){
             System.out.println(temp);
         }

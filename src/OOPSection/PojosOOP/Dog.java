@@ -1,4 +1,4 @@
-package OOPSection.extras;
+package OOPSection.PojosOOP;
 
 public class Dog extends Animal{
     private int leg;

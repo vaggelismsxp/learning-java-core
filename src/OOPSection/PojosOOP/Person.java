@@ -1,4 +1,4 @@
-package OOPSection.extras;
+package OOPSection.PojosOOP;
 
 public class Person {
     private int age;

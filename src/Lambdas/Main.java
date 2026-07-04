@@ -1,14 +1,19 @@
 package Lambdas;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Consumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         List<String> names = new ArrayList<>();
         names.add("giorgos");
         names.add("mix");
@@ -19,15 +24,25 @@ public class Main {
         lambda.greetings();
 
         StringEndings exclamationMark = (s) -> s + "!";
-        System.out.println(exclamationMark.perform(names.get(new Random().nextInt(0,5))));
+        System.out.println(exclamationMark.perform(names.get(new Random().nextInt(0,4))));
 
         String a = "apples";
         String b = "banana";
 
-        StringCompare compare = (s1,s2) -> getBiggerOrFirstAlphabetically(s1,s2);
-        
-        String winner = compare.perform(a, b);
+        //StringCompare compare = (a,b) -> getBiggerOrFirstAlphabetically(s1,s2);
+        //String winner = compare.perform(a,b);
+        BinaryOperator<String> compare1 = Main::getBiggerOrFirstAlphabetically;
+        String winner = compare1.apply(a, b);
         System.out.println(winner);
+
+
+        String str = "Hello World!";
+        Predicate<String> methodRef = str::startsWith;
+        System.out.println("---------------------");
+        System.out.println(methodRef.test("Not"));
+        
+
+        
 
         Predicate<Integer> lessThan100 = i -> (i<100);
         Predicate<Integer> greaterThan50 = i -> (i>50);
@@ -37,24 +52,67 @@ public class Main {
 
         
         Supplier<Integer> randomInt = () -> ThreadLocalRandom.current().nextInt(1000);
-        System.out.println(randomInt.get());
+        System.out.println("random we got: " +randomInt.get());
+        System.out.println("--------------");
+
+        // ============== with Method Referencing ================
+        ICalculate divide = Main::divideTwoNumbers;
+
+        // ============== With Lambda ==============
+        // Calculate divide = (a1,b1) -> {
+        //     try{
+        //         return a1/b1;
+        //     }catch(ArithmeticException e){
+        //         e.printStackTrace();
+        //         return -1;
+        //     }
+        // };
+        int a1 = scanner.nextInt();
+        int a2 = scanner.nextInt();
+        
+        System.out.println(divide.perform(a1,a2));
 
 
-        Calculate divide = (a1,b1) -> {
-            try{
-                return a1/b1;
-            }catch(ArithmeticException e){
-                e.printStackTrace();
-                return -1;
-            }
-        };
-        int solution = divide.perform(10, 0);
-        System.out.println(solution);
+        Function<String,Integer> countVowelsFunction = Vowels::countVowels;
+        System.out.println("Word: Umbrella, Vowels found: "+countVowelsFunction.apply("umbrella"));
+
+        scanner.close();
+
+
+
+
+        //Streams --------------------------------------------------------------
+        List<String> names2 = Arrays.asList("Donald","duck","DVL","1312","Giati milate mesa edw?","e?");
+
+        List<String> resultStream = names2.stream()
+            .filter((s) -> s.length()<=6)
+            .map(String::toUpperCase)
+            .sorted((s,v)-> (s.charAt(1)<v.charAt(1)) ? -1 : (s.charAt(1) == v.charAt(1) ? 0 : 1))
+            .collect(Collectors.toList());
+        
+    
+        resultStream.forEach(System.out::println);
+        
+        
 
 
 
 
 
+
+
+
+
+    }
+
+    private static int divideTwoNumbers(int n1, int n2){
+        try{
+            System.out.print("Divide "+n1+ " by " + n2 + " and result is: ");
+            return n1/n2;
+        }catch(ArithmeticException e){
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     private static String getBiggerOrFirstAlphabetically(String s1,String s2){

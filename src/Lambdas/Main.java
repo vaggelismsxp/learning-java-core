@@ -81,23 +81,60 @@ public class Main {
 
 
 
-        //Streams --------------------------------------------------------------
-        List<String> names2 = Arrays.asList("Donald","duck","DVL","1312","Giati milate mesa edw?","e?");
+        // ===================  Streams  ===================  
+        List<String> names2 = Arrays.asList("Holland","duck","Beef","DVL","1312","Giati milate mesa edw?","e?","Tilefwno","Lord","Apo pote kai poy");
 
         List<String> resultStream = names2.stream()
             .filter((s) -> s.length()<=6)
             .map(String::toUpperCase)
-            .sorted((s,v)-> (s.charAt(1)<v.charAt(1)) ? -1 : (s.charAt(1) == v.charAt(1) ? 0 : 1))
+            .sorted((s,v)-> (s.charAt(1)<v.charAt(1)) ? -1 : (s.charAt(1) == v.charAt(1) ? 0 : 1))//Random sort based on Character with index 1
             .collect(Collectors.toList());
         
-    
+        
+        System.out.println("-------------------Stream Result -------------------");
         resultStream.forEach(System.out::println);
         
         
 
 
+        //Last session Streams.
+
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1,"Eric", 8));
+        employees.add(new Employee(2,"Milo",3));
+        employees.add(new Employee(3, "Melo", 12));
+        employees.add(new Employee(4,"Elija",35));
+        employees.add(new Employee(5,"Adil",24));
+        employees.add(new Employee(6,"Enrique",1));
+        employees.add(new Employee(7,"chad",18));
 
 
+        //First part : How many have over 10 years of experience:
+
+        //-----My solution----- Wrong solution
+        // List<Employee> resultStream2 = employees.stream()
+        //     .filter((s) -> s.getYearsOfService()>10)
+        //     .collect(Collectors.toList());
+        //  
+
+        // resultStream2.forEach((s) -> System.out.println("Name: " + s.getFirstName() + ", ID: " + s.getId()));
+
+        //Udemy course solution:
+        // int employeeYearsAboveTen = employees.stream()
+        //     .filter((s)->s.getYearsOfService()>10)
+        //     .count();
+        // System.out.println(employeeYearsAboveTen);
+        
+
+
+
+        //Second part : Their name starts with the letter E + 10 years of experience.
+
+        List<Employee> resultStream2 = employees.stream()
+            .filter((s) -> (s.getYearsOfService()>10)&&(s.getFirstName().charAt(0)=='E'))
+            .collect(Collectors.toList());
+        
+        resultStream2.forEach((s) -> System.out.println("Name: " + s.getFirstName() + ", ID: " + s.getId()));
 
 
 

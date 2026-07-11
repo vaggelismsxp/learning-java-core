@@ -109,7 +109,7 @@ public class Main {
         employees.add(new Employee(7,"chad",18));
 
 
-        //First part : How many have over 10 years of experience:
+        //First part of the Problem: How many have over 10 years of experience:
 
         //-----My solution----- Wrong solution
         // List<Employee> resultStream2 = employees.stream()
@@ -128,11 +128,11 @@ public class Main {
 
 
 
-        //Second part : Their name starts with the letter E + 10 years of experience.
+        //Second part of the Problem : Their name starts with the letter E + 10 years of experience.
 
         List<Employee> resultStream2 = employees.stream()
-            .filter((s) -> (s.getYearsOfService()>10)&&(s.getFirstName().charAt(0)=='E'))
-            .collect(Collectors.toList());
+            .filter((s) -> (s.getYearsOfService()>10)&&(s.getFirstName().startsWith("E")))
+            .toList();
         
         resultStream2.forEach((s) -> System.out.println("Name: " + s.getFirstName() + ", ID: " + s.getId()));
 

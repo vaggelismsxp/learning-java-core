@@ -1,0 +1,13 @@
+package TDD_FizzBuzz.FizzBuzzTest;
+
+import org.junit.Test;
+
+public class FizzBuzzTest{
+
+    //If number is divisible by 3, print Fizz
+    //If number is divisible by 5, print Buzz
+    //If number is divisible by 3 and 5, print FizzBuzz
+    //If number is not divisible by 3 or 5, then print the number
+
+
+}
